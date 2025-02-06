@@ -1,0 +1,15 @@
+ssh_service:
+  enabled: "yes"
+  commands:
+  - name: accountid
+    command: ["/bin/sh", "-c", "curl -s 'http://169.254.169.254/latest/dynamic/instance-identity/document' | jq -r '.accountId'"]
+    period: 24h0s
+  - name: id
+    command: ["/usr/bin/ec2-metadata", "--quiet", "-i"]
+    period: 1h0m0s
+  - name: type
+    command: ["/usr/bin/ec2-metadata", "--quiet", "-t"]
+    period: 1h0m0s
+  - name: region
+    command: ["/usr/bin/ec2-metadata", "--quiet", "-R"]
+    period: 1h0m0s
