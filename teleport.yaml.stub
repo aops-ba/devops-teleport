@@ -1,9 +1,11 @@
 ssh_service:
   enabled: "yes"
+  labels:
+    accountname: <manually specificed>
   commands:
   - name: accountid
-    command: ["/bin/sh", "-c", "curl -s 'http://169.254.169.254/latest/dynamic/instance-identity/document' | jq -r '.accountId'"]
-    period: 24h0s
+    command: ["/bin/sh", "-c", "aws sts get-caller-identity | jq -r .Account"]
+    period: 24h0s   
   - name: id
     command: ["/usr/bin/ec2-metadata", "--quiet", "-i"]
     period: 1h0m0s
