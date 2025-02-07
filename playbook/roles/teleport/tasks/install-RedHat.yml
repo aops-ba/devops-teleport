@@ -1,0 +1,21 @@
+---
+# - name: Add Teleport repository.
+#   command: yum-config-manager --add-repo https://rpm.releases.teleport.dev/teleport.repo
+# - name: Add Teleport repository.
+#   yum_repository:
+#     name: Teleport Repository
+#     baseurl: https://rpm.releases.teleport.dev/teleport.repo
+#     description: "Teleport Access Plane repository for RHEL"
+
+- name: Download teleport install script
+  get_url:
+    url: "{{ teleport_install_script }}"
+    dest: /tmp/teleport_install.sh
+    mode: '0777'
+
+
+- name: Run teleport install script.
+  command:
+    cmd: "/tmp/teleport_install.sh {{teleport_version }}"
+  args:
+    creates: /etc/teleport.yml

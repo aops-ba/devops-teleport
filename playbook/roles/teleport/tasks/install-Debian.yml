@@ -1,0 +1,13 @@
+
+- name: Download teleport install script
+  get_url:
+    url: "{{ teleport_install_script }}"
+    dest: /tmp/teleport_install.sh
+    mode: '0777'
+
+
+- name: Run teleport install script.
+  command:
+    cmd: "/tmp/teleport_install.sh {{teleport_version }}"
+  args:
+    creates: /etc/teleport.yml

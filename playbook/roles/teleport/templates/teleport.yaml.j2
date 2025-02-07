@@ -1,0 +1,44 @@
+version: v3
+teleport:
+  nodename: {{ teleport_nodename }}
+  data_dir: {{ teleport_data_dir }}
+
+  join_params:
+    token_name: {{ teleport_auth_token }}
+    method: token
+
+  proxy_server: {{ teleport_proxy_server }}
+
+  log:
+    output: {{ teleport_log_path }}
+    severity: {{ teleport_log_level }}
+    format:
+      output: text
+
+  ca_pin: {{ teleport_ca_pin }}
+  diag_addr: ""
+
+auth_service:
+  enabled: "no"
+
+proxy_service:
+  enabled: "no"
+
+ssh_service:
+  enabled: "yes"
+  labels:
+    accountname: {{ teleport_label_accountname }}
+    team: {{ teleport_label_team }}
+  commands:
+  - name: accountid
+    command: ["/bin/sh", "-c", "aws sts get-caller-identity | jq -r .Account"]
+    period: 24h0s
+  - name: id
+    command: ["/usr/bin/ec2-metadata", "--quiet", "-i"]
+    period: 1h0m0s
+  - name: type
+    command: ["/usr/bin/ec2-metadata", "--quiet", "-t"]
+    period: 1h0m0s
+  - name: region
+    command: ["/usr/bin/ec2-metadata", "--quiet", "-R"]
+    period: 1h0m0s

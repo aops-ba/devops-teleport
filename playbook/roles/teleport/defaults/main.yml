@@ -1,0 +1,32 @@
+---
+# Teleport package state; use `present` to make sure it's installed, or `latest`
+# if you want to upgrade or switch versions using a new repo.
+teleport_packages_state: present
+teleport_packages: teleport
+
+teleport_version: 17.2.1
+teleport_install_script: "https://cdn.teleport.dev/install-v{{teleport_version}}.sh"
+
+teleport_service: teleport
+teleport_state: started
+teleport_enabled: "yes"
+
+teleport_configuration_path: "/etc/teleport.yaml"
+
+teleport_nodename: "{{ ansible_fqdn }}"
+teleport_data_dir: "/var/lib/teleport"
+
+teleport_proxy_server: "teleport.aops.tools:443"
+
+teleport_auth_token: "xxx-changeme-xxx"
+teleport_ca_pin: "sha256:baca5b79c636703f26415b6dd4865f25926906580be96def9a4ff38383cad95c"
+
+teleport_log_path: "stderr"
+teleport_log_level: "INFO"
+
+
+teleport_ssh_enabled: true
+teleport_ssh_listen_address: "0.0.0.0:3022"
+
+teleport_label_accountname: ""
+teleport_label_team: ""
