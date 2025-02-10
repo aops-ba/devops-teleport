@@ -12,7 +12,7 @@ configs and files for teleport service
 
 ### install ansible
 ```
-sudo rum install ansible
+sudo yum install ansible
 ```
 
 ### download the playbook
